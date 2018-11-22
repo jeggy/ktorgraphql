@@ -1,0 +1,7 @@
+query MyQuery {
+    me(name: "Jógvan") {
+        id
+        name
+        extra
+    }
+}
