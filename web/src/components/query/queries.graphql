@@ -1,7 +1,8 @@
-query MyQuery {
+query MyQuery($input: TestInput!) {
     me(name: "Jógvan") {
         id
         name
         extra
     }
+    test(input: $input)
 }

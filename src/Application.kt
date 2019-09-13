@@ -1,5 +1,6 @@
 package net.jebster
 
+import com.google.gson.Gson
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
@@ -51,8 +52,11 @@ fun Application.module() {
     routing {
         post("/graphql") {
             val request = call.receive<GraphQLRequest>()
-            println(request.query)
-            call.respond(schema.execute(request.query ?: request.mutation!!))
+            val result = schema.execute(
+                request.query ?: request.mutation!!,
+                Gson().toJson(request.variables)
+            )
+            call.respond(result)
         }
     }
 }

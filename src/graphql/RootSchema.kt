@@ -2,13 +2,14 @@ package net.jebster.graphql
 
 import com.github.pgutkowski.kgraphql.KGraphQL
 
-val schema = KGraphQL.schema {
-    configure {
-        useDefaultPrettyPrinter = true
-    }
+data class TestInput(
+    val a: Int,
+    val b: Int
+)
 
+val schema = KGraphQL.schema {
     query("test") {
-        resolver { -> "Hello World" }
+        resolver { input: TestInput -> "Hello World" }
     }
     mutation("test") {
         resolver { -> "Hello World" }
@@ -18,7 +19,7 @@ val schema = KGraphQL.schema {
         resolver { name: String -> MyType(1, name) }
     }
 
-    type<MyType>() {
+    type<MyType> {
         property<String>("extra") {
             resolver { "Hello, ${it.name}!" }
         }
